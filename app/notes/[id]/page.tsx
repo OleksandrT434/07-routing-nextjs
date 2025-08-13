@@ -20,4 +20,4 @@ export default async function NoteDetailsPage({ params }: Props) {
       <NoteDetails />
     </HydrationBoundary>
   );
-}
+} 

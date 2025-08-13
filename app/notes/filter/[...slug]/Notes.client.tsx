@@ -11,23 +11,31 @@ import { useQuery, keepPreviousData} from '@tanstack/react-query';
 import { fetchNotes} from '@/lib/api';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import type { Note } from '@/types/note';
+import { useEffect } from 'react';
 
 interface PaginatedNotes {
   notes: Note[];
   totalPages: number;
 }
 type AppPageProps = {
-  initialData: PaginatedNotes;
+  initialData?: PaginatedNotes;
+  tag: string; 
 };
 
 
 import { useDebouncedCallback } from 'use-debounce';
 
-export default function AppPage( { initialData }: AppPageProps) {
+export default function AppPage( { initialData, tag }: AppPageProps) {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [debouncedValue, setDebouncedValue] = useState('');
+  
+  useEffect(() => {
+    setPage(1);
+    setInputValue('');
+    setDebouncedValue('');
+  }, [tag]);
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedValue(value);
@@ -41,7 +49,7 @@ export default function AppPage( { initialData }: AppPageProps) {
 
   const { data } = useQuery<PaginatedNotes>({
     queryKey: ['notes', page, debouncedValue],
-    queryFn: () => fetchNotes(page, 12, debouncedValue),
+    queryFn: () => fetchNotes(page, 12, debouncedValue, undefined, tag === 'All' ? undefined : tag),
     placeholderData: keepPreviousData,
     initialData,
   });

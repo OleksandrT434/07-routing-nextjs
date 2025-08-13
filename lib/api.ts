@@ -18,7 +18,7 @@ const api = axios.create({
   },
 });
 
-export async function fetchNotes(page: number = 1, perPage: number = 12, search: string, sortBy?: 'created' | 'updated'): Promise<PaginatedNotes> {
+export async function fetchNotes(page: number = 1, perPage: number = 12, search: string, sortBy?: 'created' | 'updated', tag?:string): Promise<PaginatedNotes> {
   const params: Record<string, string | number> = { page, perPage };
 
   if (search && search.trim()) {
@@ -27,7 +27,9 @@ export async function fetchNotes(page: number = 1, perPage: number = 12, search:
   if (sortBy) {
     params.sortBy = sortBy;
   }
-
+  if (tag && tag !== 'All') {
+    params.tag = tag;
+  }
 
   const response:AxiosResponse<PaginatedNotes> = await api.get('/notes', { params }) ;
   return response.data;
