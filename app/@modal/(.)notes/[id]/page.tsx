@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default async function NoteModalPage({ params }: Props) {
-  const { id } = await params;
+  const { id } = params;
   const note: Note = await fetchNoteById(id);
 
   return <NoteModalClient note={note} />;
