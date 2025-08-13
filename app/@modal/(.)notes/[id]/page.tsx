@@ -3,11 +3,11 @@
   import NoteModalClient from './NotePreview';
   
 
-  type Props = {
+  type modalProps = {
     params: { id: string };
   };
 
-  export default async function NoteModalPage({ params }: Props) {
+  export default async function NoteModalPage({ params }: modalProps) {
     const { id } = params;
     const note: Note = await fetchNoteById(id);
 
