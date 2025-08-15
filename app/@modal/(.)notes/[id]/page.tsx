@@ -7,20 +7,21 @@ type NoteModalPageProps = {
   params: Promise<{ id: string }>;
 };
 
+
 export default async function NoteModalPage({ params }: NoteModalPageProps) {
   const { id } = await params;
 
   const queryClient = new QueryClient();
 
-  const note = await fetchNoteById(id);
+
   await queryClient.prefetchQuery({
     queryKey: ['note', id],
-    queryFn: () => note,
+    queryFn: () => fetchNoteById(id),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteModalClient note={note} /> 
+      <NoteModalClient />
     </HydrationBoundary>
   );
 }

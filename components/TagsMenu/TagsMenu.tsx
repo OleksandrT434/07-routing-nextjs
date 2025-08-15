@@ -13,7 +13,7 @@ const tags = [
     {id:'Shopping', name: 'Shopping'},
 ];
 
-const CategoriesMenu = () => {
+const TagsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -41,4 +41,4 @@ const CategoriesMenu = () => {
   );
 };
 
-export default CategoriesMenu;
+export default TagsMenu;

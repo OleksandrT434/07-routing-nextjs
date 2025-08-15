@@ -18,7 +18,7 @@ interface PaginatedNotes {
   totalPages: number;
 }
 type AppPageProps = {
-  initialData?: PaginatedNotes;
+  initialData: PaginatedNotes;
   tag: string; 
 };
 
@@ -48,7 +48,7 @@ export default function AppPage( { initialData, tag }: AppPageProps) {
   
 
   const { data } = useQuery<PaginatedNotes>({
-    queryKey: ['notes', page, debouncedValue],
+    queryKey: ['notes', page, debouncedValue, tag],
     queryFn: () => fetchNotes(page, 12, debouncedValue, undefined, tag === 'All' ? undefined : tag),
     placeholderData: keepPreviousData,
     initialData,
